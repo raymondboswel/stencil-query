@@ -1,10 +1,9 @@
-import type { QueryFunction } from '@tanstack/query-core'
+import type { QueryFunction, QueryKey } from '@tanstack/query-core'
 import { QueriesObserver } from '@tanstack/query-core'
 import { useQueryClient } from './QueryClientProvider'
 import type {
   CreateQueryOptions,
   CreateQueryResult,
-  SolidQueryKey,
 } from './types'
 import { createStore } from '@stencil/store'
 import { useIsRestoring } from './isRestoring'
@@ -15,7 +14,7 @@ type CreateQueryOptionsForCreateQueries<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 > = Omit<CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'context'>
 
 // Avoid TS depth-limit error in case of large array literal
@@ -49,14 +48,14 @@ type GetOptions<T> =
     TQueryFnData,
     unknown,
     TData,
-    () => TQueryKey
+    TQueryKey
   >
   : T extends { queryFn?: QueryFunction<infer TQueryFnData, infer TQueryKey> }
   ? CreateQueryOptionsForCreateQueries<
     TQueryFnData,
     unknown,
     TQueryFnData,
-    () => TQueryKey
+    TQueryKey
   >
   : // Fallback
   CreateQueryOptionsForCreateQueries

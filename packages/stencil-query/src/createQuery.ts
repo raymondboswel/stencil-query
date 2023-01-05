@@ -1,10 +1,9 @@
-import type { QueryFunction, QueryOptions } from '@tanstack/query-core'
+import type { QueryFunction, QueryKey, QueryOptions } from '@tanstack/query-core'
 import { QueryObserver } from '@tanstack/query-core'
 import type {
   CreateQueryOptions,
   CreateQueryResult,
   DefinedCreateQueryResult,
-  SolidQueryKey,
 } from './types'
 import { parseQueryArgs } from './utils'
 import { createBaseQuery } from './createBaseQuery'
@@ -19,7 +18,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: Omit<
     CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
@@ -32,7 +31,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: Omit<
     CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
@@ -45,7 +44,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): {result: CreateQueryResult<TData, TError>}
@@ -53,7 +52,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   options?: Omit<
@@ -65,7 +64,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   options?: Omit<
@@ -77,7 +76,7 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   options?: Omit<
@@ -89,11 +88,11 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   // TODO(lukemurray): not sure if we want to use return type here
-  queryFn: QueryFunction<TQueryFnData, ReturnType<TQueryKey>>,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     'queryKey' | 'queryFn' | 'initialData'
@@ -103,10 +102,10 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, ReturnType<TQueryKey>>,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     'queryKey' | 'queryFn' | 'initialData'
@@ -116,10 +115,10 @@ export function createQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, ReturnType<TQueryKey>>,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     'queryKey' | 'queryFn'
@@ -129,11 +128,11 @@ export function createQuery<
   TQueryFnData,
   TError,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   arg1: TQueryKey | CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
   arg2?:
-    | QueryFunction<TQueryFnData, ReturnType<TQueryKey>>
+    | QueryFunction<TQueryFnData, TQueryKey>
     | CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
   arg3?: CreateQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): {result: CreateQueryResult<TData, TError>} {
@@ -150,7 +149,7 @@ export function createQuery<
   })
  */
   return createBaseQuery(
-    queryArgsStore.state as QueryOptions<any, any, any, ReturnType<TQueryKey>>,
+    queryArgsStore.state as QueryOptions<any, any, any, TQueryKey>,
     QueryObserver,
   )
 }

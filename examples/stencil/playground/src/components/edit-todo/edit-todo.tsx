@@ -1,6 +1,7 @@
 import { Component, h, Prop, Watch } from '@stencil/core';
-import { createQuery, createMutation, QueryObserverResult, useQueryClient, TData, TError } from '@tanstack/stencil-query';
+import { createQuery, createMutation, QueryObserverResult, useQueryClient } from '@tanstack/stencil-query';
 import { fetchTodoById, patchTodo } from '../../api/api';
+import { Todo } from '../types';
 
 @Component({
   tag: 'edit-todo',
@@ -12,7 +13,7 @@ export class EditTodo {
 
   todo: any;
 
-  todoQuery: QueryObserverResult<TData, TError>;
+  todoQuery: {result: QueryObserverResult<Todo, unknown>};
   queryClient = useQueryClient();
 
   saveMutation;
@@ -37,7 +38,7 @@ export class EditTodo {
 
   @Watch("editingIndex")
   useTodo() {
-   this.todoQuery =  createQuery({
+   this.todoQuery = createQuery({
       queryKey: ["todo", { id: this.editingIndex }],
       queryFn: () => fetchTodoById({ id: this.editingIndex }),
       enabled: this.editingIndex !== null,

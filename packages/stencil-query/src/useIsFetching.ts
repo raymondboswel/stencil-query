@@ -1,23 +1,23 @@
-import type { QueryFilters } from '@tanstack/query-core'
+import { parseFilterArgs, QueryFilters, QueryKey } from '@tanstack/query-core'
 
-import type { StoreOptions, SolidQueryKey, SolidQueryFilters } from './types'
 import { useQueryClient } from './QueryClientProvider'
-import { parseFilterArgs } from './utils'
+import { StoreOptions } from './types'
+
 
 interface Options extends StoreOptions {}
 
 export function useIsFetching(
-  filters?: SolidQueryFilters,
+  filters?: QueryFilters,
   options?: Options,
 ): number
 export function useIsFetching(
-  queryKey?: SolidQueryKey,
-  filters?: SolidQueryFilters,
+  queryKey?: QueryKey,
+  filters?: QueryFilters,
   options?: Options,
 ): number
 export function useIsFetching(
-  arg1?: SolidQueryKey | SolidQueryFilters,
-  arg2?: SolidQueryFilters | Options,
+  arg1?: QueryKey | QueryFilters,
+  arg2?: QueryFilters | Options,
   arg3?: Options,
 ): number {
   const [filters, options = {}] = parseFilterArgs(arg1, arg2, arg3)

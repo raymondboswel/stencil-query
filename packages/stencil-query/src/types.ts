@@ -23,9 +23,6 @@ export interface StoreOptions {
   store?: ObservableMap<{client: QueryClient | undefined}>
 }
 
-/* --- Create Query and Create Base Query  Types --- */
-export type SolidQueryKey = () => readonly unknown[]
-
 export interface CreateBaseQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
@@ -39,14 +36,14 @@ export interface CreateQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends () => readonly unknown[] = SolidQueryKey,
+  TQueryKey extends readonly unknown[] = QueryKey,
 > extends Omit<
     CreateBaseQueryOptions<
       TQueryFnData,
       TError,
       TData,
       TQueryFnData,
-      ReturnType<TQueryKey>
+      TQueryKey
     >,
     'queryKey'
   > {
@@ -75,12 +72,12 @@ export type DefinedCreateQueryResult<
 
 export type ParseQueryArgs<
   TOptions extends Omit<
-    QueryOptions<any, any, any, ReturnType<TQueryKey>>,
+    QueryOptions<any, any, any, TQueryKey>,
     'queryKey'
   > & {
     queryKey?: TQueryKey
   },
-  TQueryKey extends () => readonly unknown[] = SolidQueryKey,
+  TQueryKey extends readonly unknown[] = QueryKey,
 > = TOptions['queryKey'] extends () => infer R
   ? Omit<TOptions, 'queryKey'> & { queryKey?: R }
   : TOptions
@@ -91,7 +88,7 @@ export interface CreateInfiniteQueryOptions<
   TError = unknown,
   TData = TQueryFnData,
   TQueryData = TQueryFnData,
-  TQueryKey extends () => readonly unknown[] = SolidQueryKey,
+  TQueryKey extends readonly unknown[] = QueryKey,
 > extends StoreOptions,
     Omit<
       InfiniteQueryObserverOptions<
@@ -99,7 +96,7 @@ export interface CreateInfiniteQueryOptions<
         TError,
         TData,
         TQueryData,
-        ReturnType<TQueryKey>
+        TQueryKey
       >,
       'queryKey'
     > {
@@ -161,9 +158,7 @@ export type CreateMutationResult<
 type Override<A, B> = { [K in keyof A]: K extends keyof B ? B[K] : A[K] }
 
 /* --- Use Is Fetching Types --- */
-export interface SolidQueryFilters extends Omit<QueryFilters, 'queryKey'> {
-  queryKey?: SolidQueryKey
-}
 
-export type ParseFilterArgs<T extends SolidQueryFilters> =
+
+export type ParseFilterArgs<T extends QueryFilters> =
   T['queryKey'] extends () => infer R ? T & { queryKey: R } : T

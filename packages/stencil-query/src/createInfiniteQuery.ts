@@ -2,12 +2,12 @@ import type {
   QueryObserver,
   QueryFunction,
   QueryOptions,
+  QueryKey,
 } from '@tanstack/query-core'
 import { InfiniteQueryObserver } from '@tanstack/query-core'
 import type {
   CreateInfiniteQueryOptions,
   CreateInfiniteQueryResult,
-  SolidQueryKey,
 } from './types'
 import { createBaseQuery } from './createBaseQuery'
 import { parseQueryArgs } from './utils'
@@ -16,7 +16,7 @@ export function createInfiniteQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: CreateInfiniteQueryOptions<
     TQueryFnData,
@@ -30,7 +30,7 @@ export function createInfiniteQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
   options?: Omit<
@@ -48,10 +48,10 @@ export function createInfiniteQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, ReturnType<TQueryKey>>,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     CreateInfiniteQueryOptions<
       TQueryFnData,
@@ -67,7 +67,7 @@ export function createInfiniteQuery<
   TQueryFnData,
   TError,
   TData = TQueryFnData,
-  TQueryKey extends SolidQueryKey = SolidQueryKey,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   arg1:
     | TQueryKey
@@ -79,7 +79,7 @@ export function createInfiniteQuery<
         TQueryKey
       >,
   arg2?:
-    | QueryFunction<TQueryFnData, ReturnType<TQueryKey>>
+    | QueryFunction<TQueryFnData, TQueryKey>
     | CreateInfiniteQueryOptions<
         TQueryFnData,
         TError,
@@ -100,7 +100,7 @@ export function createInfiniteQuery<
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3);
 
   return createBaseQuery(
-    parsedOptions as QueryOptions<any, any, any, ReturnType<TQueryKey>>,
+    parsedOptions as QueryOptions<any, any, any, TQueryKey>,
     InfiniteQueryObserver as typeof QueryObserver,
   ) as {result: CreateInfiniteQueryResult<TData, TError>}
 }

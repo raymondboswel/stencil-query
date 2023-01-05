@@ -1,3 +1,5 @@
+import { Todo } from "../components/types";
+
 let errorRate = 0.05;
 let queryTimeMin = 1000;
 let queryTimeMax = 2000;
@@ -22,7 +24,7 @@ export function fetchTodos({ signal, queryKey: [, { filter }] }) {
     });
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise<Todo[]>((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < errorRate) {
         return reject(
@@ -36,7 +38,7 @@ export function fetchTodos({ signal, queryKey: [, { filter }] }) {
 
 export function fetchTodoById({ id }) {
   console.info("fetchTodoById", { id });
-  return new Promise((resolve, reject) => {
+  return new Promise<Todo>((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < errorRate) {
         return reject(

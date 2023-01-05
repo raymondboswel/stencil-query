@@ -1,5 +1,6 @@
 import { Component, h, State } from '@stencil/core';
-import { QueryClient, QueryObserverResult, useQueryClient, TData, TError,initializeQueryClientStore } from '@tanstack/stencil-query';
+import { QueryClient, QueryObserverResult, useQueryClient, initializeQueryClientStore } from '@tanstack/stencil-query';
+import { Todo } from '../types';
 
 @Component({
   tag: 'app-root',
@@ -15,7 +16,7 @@ export class AppRoot {
       },
     },
   });
-  state: QueryObserverResult<TData, TError>;
+  state: QueryObserverResult<Todo[], unknown>;
 
   @State() editingIndex: number = null;
 

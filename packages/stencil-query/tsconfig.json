@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "composite": true,
+    "rootDir": "./src",
+    "outDir": "./build/stencil",
+    "declarationDir": "./build/lib",
+    "tsBuildInfoFile": "./build/.tsbuildinfo",
+    "jsx": "preserve",
+    "emitDeclarationOnly": false
+  },
+  "include": ["src"],
+  "references": [
+  ]
+}

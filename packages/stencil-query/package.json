@@ -1,0 +1,45 @@
+{
+  "name": "raymondboswel/stencil-query",
+  "version": "4.20.4",
+  "description": "Primitives for managing, caching and syncing asynchronous and remote data in Stencil",
+  "author": "Raymond Boswel",
+  "license": "MIT",
+  "repository": "raymondboswel/stencil-query",
+  "homepage": "https://tanstack.com/query",
+  "types": "build/lib/index.d.ts",
+  "main": "build/lib/index.js",
+  "module": "build/lib/index.esm.js",
+  "exports": {
+    ".": {
+      "types": "./build/lib/index.d.ts",
+      "solid": "./build/solid/index.jsx",
+      "import": "./build/lib/index.mjs",
+      "browser": "./build/lib/index.mjs",
+      "require": "./build/lib/index.js",
+      "node": "./build/lib/index.js",
+      "default": "./build/lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "test:eslint": "../../node_modules/.bin/eslint --ext .ts,.tsx ./src",
+    "test:jest": "../../node_modules/.bin/jest --config ./jest.config.ts",
+    "test:dev": "pnpm run test:jest --watch"
+  },
+  "files": [
+    "build/lib/*",
+    "build/umd/*",
+    "build/solid/*",
+    "src"
+  ],
+  "dependencies": {
+    "@tanstack/query-core": "4.20.9"
+  },
+  "peerDependencies": {
+    "@stencil/store": "^2.0.1",
+    "@stencil/core": "2.20.0"
+  },
+  "peerDependenciesMeta": {}
+}
